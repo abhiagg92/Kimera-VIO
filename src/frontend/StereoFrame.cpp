@@ -11,6 +11,7 @@
  * @brief  Class describing a pair of stereo images
  * @author Antoni Rosinol, Luca Carlone
  */
+#include <tuple>
 
 #include "kimera-vio/frontend/StereoFrame.h"
 
@@ -618,7 +619,7 @@ void StereoFrame::computeRectificationParameters(
   gtsam::Pose3 camL_Pose_camR = (left_cam_params->body_Pose_cam_)
                                     .between(right_cam_params->body_Pose_cam_);
   // NOTE: openCV pose convention is the opposite, that's why we have to invert
-  boost::tie(L_Rot_R, L_Tran_R) =
+  std::tie(L_Rot_R, L_Tran_R) =
       UtilsOpenCV::Pose2cvmats(camL_Pose_camR.inverse());
 
   //////////////////////////////////////////////////////////////////////////////

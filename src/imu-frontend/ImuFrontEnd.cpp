@@ -13,6 +13,8 @@
  * @author Luca Carlone
  */
 
+#include <memory>
+
 #include "kimera-vio/imu-frontend/ImuFrontEnd.h"
 
 #include <glog/logging.h>
@@ -170,11 +172,11 @@ gtsam::PreintegrationBase::Params ImuFrontEnd::convertVioImuParamsToGtsam(
   return preint_imu_params;
 }
 
-boost::shared_ptr<gtsam::PreintegratedCombinedMeasurements::Params>
+std::shared_ptr<gtsam::PreintegratedCombinedMeasurements::Params>
 ImuFrontEnd::generateCombinedImuParams(const ImuParams& imu_params) {
-  boost::shared_ptr<gtsam::PreintegratedCombinedMeasurements::Params>
+  std::shared_ptr<gtsam::PreintegratedCombinedMeasurements::Params>
       combined_imu_params =
-          boost::make_shared<gtsam::PreintegratedCombinedMeasurements::Params>(
+          std::make_shared<gtsam::PreintegratedCombinedMeasurements::Params>(
               imu_params.n_gravity_);
   gtsam::PreintegrationParams gtsam_imu_params =
       ImuFrontEnd::convertVioImuParamsToGtsam(imu_params);
@@ -206,11 +208,11 @@ ImuFrontEnd::generateCombinedImuParams(const ImuParams& imu_params) {
   return combined_imu_params;
 }
 
-boost::shared_ptr<gtsam::PreintegratedImuMeasurements::Params>
+std::shared_ptr<gtsam::PreintegratedImuMeasurements::Params>
 ImuFrontEnd::generateRegularImuParams(const ImuParams& imu_params) {
-  boost::shared_ptr<gtsam::PreintegratedImuMeasurements::Params>
+  std::shared_ptr<gtsam::PreintegratedImuMeasurements::Params>
       regular_imu_params =
-          boost::make_shared<gtsam::PreintegratedImuMeasurements::Params>(
+          std::make_shared<gtsam::PreintegratedImuMeasurements::Params>(
               imu_params.n_gravity_);
   gtsam::PreintegrationParams gtsam_imu_params =
       ImuFrontEnd::convertVioImuParamsToGtsam(imu_params);

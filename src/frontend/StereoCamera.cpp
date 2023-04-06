@@ -11,6 +11,8 @@
  * @brief  Class describing a stereo camera.
  * @author Antoni Rosinol
  */
+#include <memory>
+#include <tuple>
 
 #include "kimera-vio/frontend/StereoCamera.h"
 
@@ -18,8 +20,6 @@
 
 #include <opencv2/calib3d.hpp>
 #include <opencv2/core.hpp>
-
-#include <boost/utility.hpp>  // for tie
 
 #include <gtsam/geometry/Cal3_S2.h>
 #include <gtsam/geometry/Cal3_S2Stereo.h>
@@ -74,7 +74,7 @@ StereoCamera::StereoCamera(const CameraParams& left_cam_params,
   //! Create stereo camera calibration after rectification and undistortion.
   gtsam::Cal3_S2 left_undist_rect_cam_mat = UtilsOpenCV::Cvmat2Cal3_S2(P1_);
   stereo_calibration_ =
-      boost::make_shared<gtsam::Cal3_S2Stereo>(left_undist_rect_cam_mat.fx(),
+      std::make_shared<gtsam::Cal3_S2Stereo>(left_undist_rect_cam_mat.fx(),
                                                left_undist_rect_cam_mat.fy(),
                                                left_undist_rect_cam_mat.skew(),
                                                left_undist_rect_cam_mat.px(),
@@ -274,7 +274,7 @@ void StereoCamera::computeRectificationParameters(
   // NOTE: openCV pose convention is the opposite, that's why we have to
   // invert
   cv::Mat camL_Rot_camR, camL_Tran_camR;
-  boost::tie(camL_Rot_camR, camL_Tran_camR) =
+  std::tie(camL_Rot_camR, camL_Tran_camR) =
       UtilsOpenCV::Pose2cvmats(camL_Pose_camR.inverse());
 
   // kAlpha is -1 by default, but that introduces invalid keypoints!

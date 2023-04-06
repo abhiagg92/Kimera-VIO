@@ -13,6 +13,7 @@
  *      Author: Antoni Rosinol
  */
 
+#include <memory>
 #include "kimera-vio/factors/PointPlaneFactor.h"
 
 using namespace std;
@@ -28,7 +29,7 @@ void PointPlaneFactor::print(const string& s,
 }
 
 gtsam::NonlinearFactor::shared_ptr PointPlaneFactor::clone() const {
-  return boost::static_pointer_cast<gtsam::NonlinearFactor>(
+  return std::static_pointer_cast<gtsam::NonlinearFactor>(
       gtsam::NonlinearFactor::shared_ptr(new PointPlaneFactor(*this)));
 }
 

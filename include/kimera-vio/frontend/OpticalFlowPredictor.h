@@ -93,7 +93,7 @@ class RotationalOpticalFlowPredictor : public OpticalFlowPredictor {
     // of the image.
     // Keep because then you save a lot of computation.
     static constexpr double kSmallRotationTol = 1e-4;
-    if (std::abs(1.0 - std::abs(cam1_R_cam2.quaternion()[0])) <
+    if (std::abs(1.0 - std::abs(cam1_R_cam2.toQuaternion().w())) <
         kSmallRotationTol) {
       *next_kps = prev_kps;
       return true;

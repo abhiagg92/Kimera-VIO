@@ -20,6 +20,7 @@
 #include <thread>
 #include <utility>
 #include <mutex>
+#include <memory>
 
 #include <Eigen/Dense>
 
@@ -188,10 +189,10 @@ public:
   static gtsam::PreintegrationType::Params convertVioImuParamsToGtsam(
       const ImuParams& imu_params);
 
-  static boost::shared_ptr<gtsam::PreintegratedCombinedMeasurements::Params>
+  static std::shared_ptr<gtsam::PreintegratedCombinedMeasurements::Params>
   generateCombinedImuParams(const ImuParams& imu_params);
 
-  static boost::shared_ptr<gtsam::PreintegratedImuMeasurements::Params>
+  static std::shared_ptr<gtsam::PreintegratedImuMeasurements::Params>
   generateRegularImuParams(const ImuParams& imu_params);
 
  private:

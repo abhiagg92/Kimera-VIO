@@ -69,8 +69,8 @@ public:
   Vector evaluateError(
                     const OrientedPlane3& plane_1,
                     const OrientedPlane3& plane_2,
-                    boost::optional<Matrix&> H_plane_1 = boost::none,
-                    boost::optional<Matrix&> H_plane_2 = boost::none) const {
+                    OptionalMatrixTypeT<Matrix&> H_plane_1 = {},
+                    OptionalMatrixTypeT<Matrix&> H_plane_2 = {}) const {
       return doEvaluateError(plane_1, plane_2, H_plane_1, H_plane_2);
   }
 
@@ -82,8 +82,8 @@ private:
   virtual Vector doEvaluateError(
                    const OrientedPlane3& plane_1,
                    const OrientedPlane3& plane_2,
-                   boost::optional<Matrix&> H_plane_1,
-                   boost::optional<Matrix&> H_plane_2) const = 0;
+                   OptionalMatrixTypeT<Matrix&> H_plane_1,
+                   OptionalMatrixTypeT<Matrix&> H_plane_2) const = 0;
 };
 
 /**
@@ -114,8 +114,8 @@ private:
   virtual Vector doEvaluateError(
                        const OrientedPlane3& plane_1,
                        const OrientedPlane3& plane_2,
-                       boost::optional<Matrix&> H_plane_1,
-                       boost::optional<Matrix&> H_plane_2) const {
+                       OptionalMatrixTypeT<Matrix&> H_plane_1,
+                       OptionalMatrixTypeT<Matrix&> H_plane_2) const {
     Unit3 plane_normal_1 = plane_1.normal();
     Unit3 plane_normal_2 = plane_2.normal();
     Matrix22 H_n_1, H_n_2;
@@ -165,8 +165,8 @@ private:
   virtual Vector doEvaluateError(
                        const OrientedPlane3& plane_1,
                        const OrientedPlane3& plane_2,
-                       boost::optional<Matrix&> H_plane_1,
-                       boost::optional<Matrix&> H_plane_2) const {
+                       OptionalMatrixTypeT<Matrix&> H_plane_1,
+                       OptionalMatrixTypeT<Matrix&> H_plane_2) const {
     Unit3 plane_normal_1 = plane_1.normal();
     Unit3 plane_normal_2 = plane_2.normal();
     Matrix22 H_n_1, H_n_2;
@@ -218,8 +218,8 @@ private:
   virtual Vector doEvaluateError(
                        const OrientedPlane3& plane_1,
                        const OrientedPlane3& plane_2,
-                       boost::optional<Matrix&> H_plane_1,
-                       boost::optional<Matrix&> H_plane_2) const {
+                       OptionalMatrixTypeT<Matrix&> H_plane_1,
+                       OptionalMatrixTypeT<Matrix&> H_plane_2) const {
     const Unit3& plane_normal_1 = plane_1.normal();
     const Unit3& plane_normal_2 = plane_2.normal();
     Vector3 err (plane_normal_1.unitVector() - plane_normal_2.unitVector());
@@ -272,8 +272,8 @@ private:
   virtual Vector doEvaluateError(
                        const OrientedPlane3& plane_1,
                        const OrientedPlane3& plane_2,
-                       boost::optional<Matrix&> H_plane_1,
-                       boost::optional<Matrix&> H_plane_2) const {
+                       OptionalMatrixTypeT<Matrix&> H_plane_1,
+                       OptionalMatrixTypeT<Matrix&> H_plane_2) const {
     const Unit3& plane_normal_1(plane_1.normal());
     const Unit3& plane_normal_2(plane_2.normal());
     Vector4 err (0.0, 0.0, 0.0, 0.0);

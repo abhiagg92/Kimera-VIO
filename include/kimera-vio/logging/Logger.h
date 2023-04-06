@@ -20,6 +20,9 @@
 #include <string>
 #include <unordered_map>
 
+#include <boost/serialization/map.hpp>
+#include <boost/serialization/vector.hpp>
+
 #include "kimera-vio/backend/VioBackEnd-definitions.h"
 #include "kimera-vio/loopclosure/LoopClosureDetector-definitions.h"
 #include "kimera-vio/mesh/Mesh.h"
