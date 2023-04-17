@@ -29,7 +29,11 @@
 #include <iostream>
 #include <memory>
 #include <unordered_map>
+#include "kimera-vio/definitions.h"
 
+#ifndef USING_GTSAM4
+#include <boost/foreach.hpp>
+#endif
 #include <gtsam/geometry/Cal3DS2.h>
 #include <gtsam/geometry/Cal3_S2.h>
 #include <gtsam/geometry/StereoCamera.h>
@@ -42,7 +46,11 @@
 #include <gtsam/nonlinear/NonlinearFactorGraph.h>
 #include <gtsam/slam/BetweenFactor.h>
 #include <gtsam/slam/PriorFactor.h>
+#ifdef USING_GTSAM4
 #include <gtsam/nonlinear/BatchFixedLagSmoother.h>
+#else
+#include <gtsam_unstable/nonlinear/BatchFixedLagSmoother.h>
+#endif
 #include <gtsam_unstable/slam/SmartStereoProjectionPoseFactor.h>
 
 #include "kimera-vio/backend/VioBackEnd-definitions.h"
@@ -388,23 +396,23 @@ class VioBackEnd {
                          const bool& showDetails = false) const;
 
   /* ------------------------------------------------------------------------ */
-  void printSmartFactor(std::shared_ptr<SmartStereoFactor> gsf) const;
+  void printSmartFactor(AUTOP::shared_ptr<SmartStereoFactor> gsf) const;
 
   /* ------------------------------------------------------------------------ */
   void printPointPlaneFactor(
-      std::shared_ptr<gtsam::PointPlaneFactor> ppf) const;
+      AUTOP::shared_ptr<gtsam::PointPlaneFactor> ppf) const;
 
   /* ------------------------------------------------------------------------ */
   void printPlanePrior(
-      std::shared_ptr<gtsam::PriorFactor<gtsam::OrientedPlane3>> ppp) const;
+      AUTOP::shared_ptr<gtsam::PriorFactor<gtsam::OrientedPlane3>> ppp) const;
 
   /* ------------------------------------------------------------------------ */
   void printPointPrior(
-      std::shared_ptr<gtsam::PriorFactor<gtsam::Point3>> ppp) const;
+      AUTOP::shared_ptr<gtsam::PriorFactor<gtsam::Point3>> ppp) const;
 
   /* ------------------------------------------------------------------------ */
   void printLinearContainerFactor(
-      std::shared_ptr<gtsam::LinearContainerFactor> lcf) const;
+      AUTOP::shared_ptr<gtsam::LinearContainerFactor> lcf) const;
 
   /* ------------------------------------------------------------------------ */
   // Provide a nonlinear factor, which will be casted to any of the selected
@@ -412,7 +420,7 @@ class VioBackEnd {
   // Slot argument, is just to print the slot of the factor if you know it.
   // If slot is -1, there is no slot number printed.
   void printSelectedFactors(
-      const std::shared_ptr<gtsam::NonlinearFactor>& g,
+      const AUTOP::shared_ptr<gtsam::NonlinearFactor>& g,
       const size_t& slot = 0,
       const bool print_smart_factors = true,
       const bool print_point_plane_factors = true,

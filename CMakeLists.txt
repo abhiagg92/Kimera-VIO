@@ -1,7 +1,10 @@
 cmake_minimum_required (VERSION 3.5)
 project(kimera_vio VERSION 1.0 LANGUAGES CXX)
 
-# Make sure that custom modules like FindXXXX are found
+# ILLIXR requires C++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)# Make sure that custom modules like FindXXXX are found
+
 # Prefer to use system installation of gflags/glog
 set(GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION TRUE)
 set(GLOG_PREFER_EXPORTED_GLOG_CMAKE_CONFIGURATION TRUE)
@@ -34,8 +37,14 @@ endif()
 find_package(Gflags REQUIRED)
 find_package(Glog 0.3.5 REQUIRED)
 find_package(GTSAM REQUIRED)
+if(${GTSAM_VERSION_MAJOR} EQUAL 4)
+  add_definitions(-DUSING_GTSAM4)
+endif()
 find_package(opengv REQUIRED)
 find_package(OpenCV REQUIRED)
+if(${OpenCV_VERSION_MAJOR} EQUAL 4)
+  add_definitions(-DUSING_OPENCV4)
+endif()
 find_package(DBoW2 REQUIRED)
 message(${DBoW2_LIBRARIES})
 #if(NOT TARGET DBoW2::DBoW2)
