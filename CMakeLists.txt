@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.16)
 project(kimera_vio VERSION 1.0 LANGUAGES CXX)
 
 # ILLIXR requires C++17
@@ -89,7 +89,7 @@ else()
 endif()
 
 ### Compile the code
-add_library(${PROJECT_NAME} SHARED "")
+add_library(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX} SHARED "")
 
 ### Add source code for data provider.
 add_subdirectory(include/kimera-vio/dataprovider)
@@ -133,7 +133,7 @@ add_subdirectory(src/imu-frontend)
 ### Add source code for visualizer.
 add_subdirectory(include/kimera-vio/visualizer)
 add_subdirectory(src/visualizer)
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX}
   PRIVATE
     opengv
   PUBLIC
@@ -146,7 +146,7 @@ target_link_libraries(${PROJECT_NAME}
     gtsam
     gtsam_unstable
  )
-target_include_directories(${PROJECT_NAME}
+target_include_directories(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX}
   PUBLIC
     ${OpenCV_INCLUDE_DIRS}
     ${GFLAGS_INCLUDE_DIRS}
@@ -156,13 +156,13 @@ target_include_directories(${PROJECT_NAME}
     $<INSTALL_INTERFACE:include>
 )
 
-target_compile_options(${PROJECT_NAME}
+target_compile_options(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX}
   PRIVATE -Wall -pipe
   PRIVATE -march=native
 )
 
 # We would just need to say cxx_std_11 if we were using cmake 3.8
-target_compile_features(${PROJECT_NAME} PUBLIC
+target_compile_features(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX} PUBLIC
         cxx_auto_type cxx_constexpr cxx_range_for cxx_nullptr cxx_override)
 
 # Add an alias so that library can be used inside the build tree,
@@ -286,13 +286,13 @@ configure_package_config_file(
 
 option(EXPORT_KIMERA "Export kimera_vio instead of installing it." OFF)
 if(EXPORT_KIMERA)
-  export(TARGETS ${PROJECT_NAME}
+  export(TARGETS ${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX}
          FILE kimera_vioTargets.cmake)
-       export(PACKAGE ${PROJECT_NAME})
+       export(PACKAGE ${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX})
 else(EXPORT_KIMERA)
   include(GNUInstallDirs)
   ## First of all, we need to install the library itself.
-  install(TARGETS ${PROJECT_NAME}
+  install(TARGETS ${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX}
       EXPORT kimera_vio-export
       LIBRARY DESTINATION lib
       ARCHIVE DESTINATION lib
