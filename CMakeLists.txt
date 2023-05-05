@@ -167,7 +167,7 @@ target_compile_features(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX} PUBLIC
 
 # Add an alias so that library can be used inside the build tree,
 # e.g. when testing
-add_library(kimera_vio::kimera_vio ALIAS kimera_vio)
+add_library(kimera_vio::kimera_vio ALIAS kimera_vio${ILLIXR_BUILD_SUFFIX})
 
 add_executable(stereoVIOEuroc ./examples/KimeraVIO.cpp)
 target_link_libraries(stereoVIOEuroc PUBLIC kimera_vio::kimera_vio)
