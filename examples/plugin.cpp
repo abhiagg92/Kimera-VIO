@@ -8,8 +8,9 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-#include <math.h>
+#include <cmath>
 #include <eigen3/Eigen/Dense>
+#include <filesystem>
 
 #include "kimera-vio/pipeline/Pipeline.h"
 
@@ -22,7 +23,13 @@
 using namespace ILLIXR;
 
 std::string get_path() {
-  return std::string{PARAMS_LOCATION} + "/ILLIXR";
+    std::string path = std::string{PARAMS_LOCATION} + "/ILLIXR";
+    if(std::filesystem::is_directory(path))
+        return path;
+    const char* KIMERA_ROOT = std::getenv("KIMERA_ROOT");
+    if (!KIMERA_ROOT)
+        ILLIXR::abort("Parameter files not found, please define KIMERA_ROOT");
+    return std::string{KIMERA_ROOT} + "/ILLIXR";
 }
 
 class kimera_vio : public plugin {
