@@ -171,7 +171,10 @@ add_library(kimera_vio::kimera_vio ALIAS kimera_vio${ILLIXR_BUILD_SUFFIX})
 
 add_executable(stereoVIOEuroc ./examples/KimeraVIO.cpp)
 target_link_libraries(stereoVIOEuroc PUBLIC kimera_vio::kimera_vio)
-
+option(ILLIXR_ROOT "" "")
+add_library(plugin.kimera_vio${ILLIXR_BUILD_SUFFIX} SHARED ./examples/plugin.cpp)
+target_include_directories(plugin.kimera_vio${ILLIXR_BUILD_SUFFIX} ${ILLIXR_ROOT})
+target_link_libraries(plugin.kimera_vio${ILLIXR_BUILD_SUFFIX} PUBLIC kimera_vio::kimera_vio)
 ############################### TESTS ##########################################
 ### Add testing
 option(BUILD_TESTS "Build tests" ON)
