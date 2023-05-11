@@ -172,9 +172,12 @@ add_library(kimera_vio::kimera_vio ALIAS kimera_vio${ILLIXR_BUILD_SUFFIX})
 add_executable(stereoVIOEuroc ./examples/KimeraVIO.cpp)
 target_link_libraries(stereoVIOEuroc PUBLIC kimera_vio::kimera_vio)
 option(ILLIXR_ROOT "" "")
+
 add_library(plugin.kimera_vio${ILLIXR_BUILD_SUFFIX} SHARED ./examples/plugin.cpp)
-target_include_directories(plugin.kimera_vio${ILLIXR_BUILD_SUFFIX} ${ILLIXR_ROOT})
+target_include_directories(plugin.kimera_vio${ILLIXR_BUILD_SUFFIX} PRIVATE ${ILLIXR_ROOT})
 target_link_libraries(plugin.kimera_vio${ILLIXR_BUILD_SUFFIX} PUBLIC kimera_vio::kimera_vio)
+target_compile_definitions(plugin.kimera_vio${ILLIXR_BUILD_SUFFIX} PUBLIC -DPARAMS_LOCATION=\"${CMAKE_INSTALL_PREFIX}/etc/kimera_vio/params\")
+
 ############################### TESTS ##########################################
 ### Add testing
 option(BUILD_TESTS "Build tests" ON)
@@ -304,6 +307,8 @@ else(EXPORT_KIMERA)
       INCLUDES DESTINATION include # We need this right?
       RUNTIME DESTINATION bin
   )
+  install(TARGETS plugin.kimera_vio${ILLIXR_BUILD_SUFFIX}
+          DESTINATION lib)
   install(EXPORT kimera_vio-export
     FILE
       kimera_vioTargets.cmake
@@ -323,6 +328,8 @@ else(EXPORT_KIMERA)
       ${CMAKE_CURRENT_LIST_DIR}/cmake/FindGlog.cmake
       DESTINATION ${INSTALL_CONFIGDIR}
   )
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/params
+          DESTINATION etc/kimera_vio)
 endif(EXPORT_KIMERA)
 
 ################################################################################

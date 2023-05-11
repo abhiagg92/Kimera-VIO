@@ -1,6 +1,10 @@
 #include <functional>
 
+#ifdef USING_OPENCV4
+#include <opencv2/opencv.hpp>
+#else
 #include <opencv/cv.hpp>
+#endif
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -9,21 +13,16 @@
 
 #include "kimera-vio/pipeline/Pipeline.h"
 
-#include "../common/plugin.hpp"
-#include "../common/switchboard.hpp"
-#include "../common/data_format.hpp"
-#include "../common/phonebook.hpp"
-#include "../common/error_util.hpp"
+#include "common/plugin.hpp"
+#include "common/switchboard.hpp"
+#include "common/data_format.hpp"
+#include "common/phonebook.hpp"
+#include "common/error_util.hpp"
 
 using namespace ILLIXR;
 
 std::string get_path() {
-    const char* KIMERA_ROOT_c_str = std::getenv("KIMERA_ROOT");
-	if (!KIMERA_ROOT_c_str) {
-        ILLIXR::abort("Please define KIMERA_ROOT");
-	}
-	std::string KIMERA_ROOT = std::string{KIMERA_ROOT_c_str};
-    return KIMERA_ROOT + "params/ILLIXR";
+  return std::string{PARAMS_LOCATION} + "/ILLIXR";
 }
 
 class kimera_vio : public plugin {
@@ -147,22 +146,22 @@ public:
 
         const auto& cached_state = vio_output->W_State_Blkf_;
         const auto& w_pose_blkf_trans = cached_state.pose_.translation().transpose();
-        const auto& w_pose_blkf_rot = cached_state.pose_.rotation().quaternion();
+        const auto& w_pose_blkf_rot = cached_state.pose_.rotation().toQuaternion();
         const auto& w_vel_blkf = cached_state.velocity_.transpose();
         const auto& imu_bias_gyro = cached_state.imu_bias_.gyroscope().transpose();
         const auto& imu_bias_acc = cached_state.imu_bias_.accelerometer().transpose();
         // Get the pose returned from SLAM
         Eigen::Quaternionf quat = Eigen::Quaternionf{
-            static_cast<float>(w_pose_blkf_rot(0)),
-            static_cast<float>(w_pose_blkf_rot(1)),
-            static_cast<float>(w_pose_blkf_rot(2)),
-            static_cast<float>(w_pose_blkf_rot(3))
+            static_cast<float>(w_pose_blkf_rot.w()),
+            static_cast<float>(w_pose_blkf_rot.x()),
+            static_cast<float>(w_pose_blkf_rot.y()),
+            static_cast<float>(w_pose_blkf_rot.z())
         };
         Eigen::Quaterniond doub_quat = Eigen::Quaterniond{
-            w_pose_blkf_rot(0),
-            w_pose_blkf_rot(1),
-            w_pose_blkf_rot(2),
-            w_pose_blkf_rot(3)
+            w_pose_blkf_rot.w(),
+            w_pose_blkf_rot.x(),
+            w_pose_blkf_rot.y(),
+            w_pose_blkf_rot.z()
         };
         Eigen::Vector3f pos  = w_pose_blkf_trans.cast<float>();
 
