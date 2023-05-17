@@ -14,11 +14,11 @@
 
 #include "kimera-vio/pipeline/Pipeline.h"
 
-#include "common/plugin.hpp"
-#include "common/switchboard.hpp"
-#include "common/data_format.hpp"
-#include "common/phonebook.hpp"
-#include "common/error_util.hpp"
+#include "illixr/plugin.hpp"
+#include "illixr/switchboard.hpp"
+#include "illixr/data_format.hpp"
+#include "illixr/phonebook.hpp"
+#include "illixr/error_util.hpp"
 
 using namespace ILLIXR;
 
