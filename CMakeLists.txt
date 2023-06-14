@@ -134,9 +134,8 @@ add_subdirectory(src/imu-frontend)
 add_subdirectory(include/kimera-vio/visualizer)
 add_subdirectory(src/visualizer)
 target_link_libraries(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX}
-  PRIVATE
-    opengv
   PUBLIC
+    opengv
     KimeraRPGO
     ${DBoW2_LIBRARIES}
     Boost::boost
