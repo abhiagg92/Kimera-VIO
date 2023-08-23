@@ -1,10 +1,6 @@
 #include <functional>
 
-#ifdef USING_OPENCV4
 #include <opencv2/opencv.hpp>
-#else
-#include <opencv/cv.hpp>
-#endif
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -15,6 +11,7 @@
 #include "kimera-vio/pipeline/Pipeline.h"
 
 #include "illixr/plugin.hpp"
+#include "illixr/openvc_data_types.hpp"
 #include "illixr/switchboard.hpp"
 #include "illixr/data_format.hpp"
 #include "illixr/phonebook.hpp"
