@@ -25,7 +25,7 @@
 #include <memory>
 #endif
 
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 
 #include <gtsam/base/Matrix.h>
 #include <gtsam/base/Vector.h>

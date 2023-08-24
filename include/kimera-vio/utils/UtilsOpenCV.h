@@ -20,7 +20,7 @@
 
 #include <glog/logging.h>
 
-#include <Eigen/Core>
+#include <eigen3/Eigen/Core>
 
 #include <opencv2/highgui/highgui_c.h>
 #include <opencv2/opencv.hpp>

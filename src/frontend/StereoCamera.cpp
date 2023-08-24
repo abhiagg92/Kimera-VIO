@@ -18,7 +18,7 @@
 
 #include "kimera-vio/frontend/StereoCamera.h"
 
-#include <Eigen/Core>
+#include <eigen3/Eigen/Core>
 
 #include <opencv2/calib3d.hpp>
 #include <opencv2/core.hpp>

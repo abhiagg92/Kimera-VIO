@@ -34,6 +34,7 @@ if(NOT TARGET Boost::boost)
   INTERFACE_INCLUDE_DIRECTORIES "${Boost_INCLUDE_DIRS}")
 endif()
 
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(Gflags REQUIRED)
 find_package(Glog 0.3.5 REQUIRED)
 find_package(GTSAM REQUIRED)
@@ -142,6 +143,7 @@ target_link_libraries(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX}
     ${OpenCV_LIBRARIES}
     ${GFLAGS_LIBRARIES}
     ${GLOG_LIBRARIES}
+    Eigen3::Eigen
     gtsam
     gtsam_unstable
  )
