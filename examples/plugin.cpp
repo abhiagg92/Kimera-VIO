@@ -11,7 +11,7 @@
 #include "kimera-vio/pipeline/Pipeline.h"
 
 #include "illixr/plugin.hpp"
-#include "illixr/openvc_data_types.hpp"
+#include "illixr/opencv_data_types.hpp"
 #include "illixr/switchboard.hpp"
 #include "illixr/data_format.hpp"
 #include "illixr/phonebook.hpp"
