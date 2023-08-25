@@ -159,7 +159,6 @@ target_include_directories(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX}
 
 target_compile_options(${PROJECT_NAME}${ILLIXR_BUILD_SUFFIX}
   PRIVATE -Wall -pipe
-  PRIVATE -march=native
 )
 
 # We would just need to say cxx_std_11 if we were using cmake 3.8
